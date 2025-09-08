@@ -2,6 +2,7 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 import '../navigation/nodes/nodes.dart' as v3;
 import 'args/story_args.dart';
@@ -11,6 +12,12 @@ typedef SetupBuilder<TArgs> =
       BuildContext context,
       Widget story,
       TArgs args,
+    );
+
+typedef TestSetupBuild =
+    Future<void> Function(
+      WidgetTester tester,
+      Widget scenario,
     );
 
 typedef ArgsBuilder<TWidget extends Widget, TArgs extends StoryArgs<TWidget>> =
@@ -23,6 +30,7 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
     required super.name,
     super.designLink,
     this.setup = defaultSetup,
+    this.testSetup = defaultTestSetup,
     required this.args,
     required this.argsBuilder,
   }) : super(
@@ -31,6 +39,7 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
 
   final TArgs args;
   final SetupBuilder<TArgs> setup;
+  final TestSetupBuild testSetup;
   final ArgsBuilder<TWidget, TArgs> argsBuilder;
 
   static Widget defaultSetup(
@@ -39,6 +48,14 @@ abstract class Story<TWidget extends Widget, TArgs extends StoryArgs<TWidget>>
     dynamic args,
   ) {
     return story;
+  }
+
+  static Future<void> defaultTestSetup(
+    WidgetTester tester,
+    Widget scenario,
+  ) async {
+    await tester.pumpWidget(scenario);
+    await tester.pumpAndSettle();
   }
 
   @override

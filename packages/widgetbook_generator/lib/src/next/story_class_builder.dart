@@ -62,6 +62,13 @@ class StoryClassBuilder {
                     Parameter(
                       (b) =>
                           b
+                            ..name = 'testSetup'
+                            ..named = true
+                            ..toSuper = true,
+                    ),
+                    Parameter(
+                      (b) =>
+                          b
                             ..name = 'args'
                             ..named = true
                             ..toSuper = hasRequiredArgs

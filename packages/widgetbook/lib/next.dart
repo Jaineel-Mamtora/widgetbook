@@ -4,6 +4,8 @@ library widgetbook.next;
 
 import 'package:meta/meta.dart';
 
+export 'package:flutter_test/flutter_test.dart';
+
 export 'src/next/addons/accessibility_addon.dart';
 export 'src/next/addons/alignment_addon.dart';
 export 'src/next/addons/base/addon.dart';

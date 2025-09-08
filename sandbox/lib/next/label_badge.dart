@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class LabelBadge extends StatelessWidget {
+class LabelBadge extends StatefulWidget {
   const LabelBadge({
     super.key,
     required this.text,
@@ -9,9 +9,21 @@ class LabelBadge extends StatelessWidget {
   final String text;
 
   @override
+  State<LabelBadge> createState() => _LabelBadgeState();
+}
+
+class _LabelBadgeState extends State<LabelBadge> {
+  bool isClicked = false;
+
+  @override
   Widget build(BuildContext context) {
-    return Badge(
-      label: Text(text),
+    return GestureDetector(
+      onTap: () {
+        setState(() => isClicked = !isClicked);
+      },
+      child: Badge(
+        label: Text('${widget.text}${isClicked ? ' clicked' : ''}'),
+      ),
     );
   }
 }
